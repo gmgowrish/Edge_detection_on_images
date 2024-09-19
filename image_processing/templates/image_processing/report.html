@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .img-thumbnail {
+            max-width: 100%;
+            height: auto;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart-title {
+            margin-top: 20px;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .section-title {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .alert-warning {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Image Processing Dashboard</h1>
+
+        <!-- Display Uploaded Image and Clarity -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Uploaded Image</h2>
+                        {% if uploaded_image_url %}
+                            <img src="{{ uploaded_image_url }}" alt="Uploaded Image" class="img-thumbnail">
+                            {% comment %} <p>Clarity: {{ uploaded_image_clarity }}</p> {% endcomment %}
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                No uploaded image.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Merged Image</h2>
+                        {% if merged_image_url %}
+                            <img src="{{ merged_image_url }}" alt="Merged Image" class="img-thumbnail">
+                            {% comment %} <p>Clarity: {{ merged_image_clarity }}</p> {% endcomment %}
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                No merged image.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Clarity Chart -->
+        <div class="chart-container">
+            <h2 class="chart-title">Normalized Clarity Scores</h2>
+            {% if clarity_chart_html %}
+                {{ clarity_chart_html|safe }}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    No clarity chart data available.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Display Color Intensity Plot -->
+        <div class="chart-container">
+            <h2 class="chart-title">Color Intensity Plot</h2>
+            {% if color_intensity_plot_html %}
+                {{ color_intensity_plot_html|safe }}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    No color intensity data available.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Display Color Intensity Line Plot -->
+        <div class="chart-container">
+            <h2 class="chart-title">Color Intensity Line Plot</h2>
+            {% if color_intensity_line_plot_html %}
+                {{ color_intensity_line_plot_html|safe }}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    No color intensity data available.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Display Channel Heatmaps -->
+        <div class="section-title">Channel Heatmaps</div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Red Channel Heatmap</h3>
+                        {% if red_heatmap_html %}
+                            {{ red_heatmap_html|safe }}
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                No data available for the red channel.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Green Channel Heatmap</h3>
+                        {% if green_heatmap_html %}
+                            {{ green_heatmap_html|safe }}
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                No data available for the green channel.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Blue Channel Heatmap</h3>
+                        {% if blue_heatmap_html %}
+                            {{ blue_heatmap_html|safe }}
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                No data available for the blue channel.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Contour Plots -->
+        <div class="section-title">Contour Plots</div>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Contour Plot - Red Channel</h3>
+                {% if contour_plot_red %}
+                    {{ contour_plot_red|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the red channel contour plot.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>Contour Plot - Green Channel</h3>
+                {% if contour_plot_green %}
+                    {{ contour_plot_green|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the green channel contour plot.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>Contour Plot - Blue Channel</h3>
+                {% if contour_plot_blue %}
+                    {{ contour_plot_blue|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the blue channel contour plot.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Display 3D Surface Plots -->
+        <div class="section-title">3D Surface Plots</div>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>3D Surface Plot - Red Channel</h3>
+                {% if surface_plot_red %}
+                    {{ surface_plot_red|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the red channel surface plot.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>3D Surface Plot - Green Channel</h3>
+                {% if surface_plot_green %}
+                    {{ surface_plot_green|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the green channel surface plot.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>3D Surface Plot - Blue Channel</h3>
+                {% if surface_plot_blue %}
+                    {{ surface_plot_blue|safe }}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No data available for the blue channel surface plot.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

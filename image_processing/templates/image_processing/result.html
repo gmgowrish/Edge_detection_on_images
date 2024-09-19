@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            color: #343a40;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .result-card {
+            margin-bottom: 30px;
+        }
+        .result-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .card-text {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        .alert-warning {
+            margin-top: 20px;
+            background-color: #ffecb3;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .link-button {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .link-button:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+        .section-heading {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .section-content {
+            margin-bottom: 30px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .accuracy {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745; /* Green color for accuracy */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">Image Processing Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'report' %}">View Detailed Report</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <h1 class="my-4">Image Processing Results</h1>
+        <p><strong>Selected Algorithm:</strong> {{ selected_algorithm }}</p>
+
+        <!-- Summary Section -->
+        <div class="section-content">
+            <h2 class="section-heading">Summary</h2>
+            <p>This page presents the results of the image processing performed using the selected algorithm. The sections below provide detailed insights into the processed images, including clarity scores, color intensities, and channel-specific heatmaps.</p>
+        </div>
+
+        <!-- Insights Section -->
+        <div class="section-content">
+            <h2 class="section-heading">Insights</h2>
+            <p>The visualizations and metrics displayed below offer a comprehensive view of the processed images. Review the plots and heatmaps to understand the quality and characteristics of each image.</p>
+        </div>
+
+        <!-- Results Display -->
+        <div class="row">
+            {% for result in results %}
+                <div class="col-md-4">
+                    <div class="card result-card">
+                        <img src="{{ result.image_url }}" class="card-img-top result-image" alt="Processed Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ result.algorithm }}</h5>
+                            <p class="card-text">Processed using: {{ result.algorithm }}</p>
+                            <p class="accuracy">Accuracy: {{ result.accuracy }} / 10</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-warning" role="alert">
+                        No images processed.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Detailed Report Link -->
+        <a href="{% url 'report' %}" class="link-button">
+            <i class="fas fa-file-alt"></i> View Detailed Report
+        </a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
