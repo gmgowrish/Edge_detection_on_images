@@ -12,13 +12,13 @@
 ## Download Repository
 
 ```
-git clone --depth 1 https://github.com/Adhiban1/Machine-Predictive-Maintenance.git
+git clone https://github.com/gmgowrish/Edge_detection_on_images.git
 ```
 
 ## Change directory
 
 ```
-cd Machine-Predictive-Maintenance
+cd Edge_detection_on_images
 ```
 
 ## Create virtual environment
@@ -30,13 +30,11 @@ python -m venv .venv
 ## Activate virtual environment
 
 For windows
-
 ```
 .venv/Scripts/activate 
 ```
 
 For linux
-
 ```
 source .venv/bin/activate
 ```
@@ -52,5 +50,8 @@ pip install -r requirements.txt
 Run web app
 
 ```
-python manage.py runserver 5000
+python manage.py runserver
 ```
+## Works
+
+Advanced edge detection techniques in microscopy work by identifying the boundaries or contours of objects in an image, crucial for detailed image analysis. The process typically begins with image preprocessing, where noise is reduced, and contrast is enhanced using filters like Gaussian smoothing. This prepares the image for edge detection by eliminating irrelevant details. The core of edge detection involves various algorithms. Gradient-based methods, such as Sobel, Prewitt, and the Canny edge detector, identify edges by calculating changes in pixel intensity, highlighting areas with significant contrast between neighboring pixels. Another method, the Laplacian of Gaussian (LoG), combines smoothing with a second-derivative operator to detect edges based on changes in intensity gradients. Additionally, advanced approaches like wavelet transforms enable multi-scale analysis, capturing edges at different levels of detail. Together, these techniques improve accuracy, allowing for more precise analysis of microscopic images in fields like biology and medicine.
